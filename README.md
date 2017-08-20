@@ -4,8 +4,10 @@ Website to store and play music, no hassle of losing your favorite albums, with 
 -Create virtual environment.</br>
 -Activate your virtual env. </br>
 -Clone the repo by following:
->> git clone repo_name </br>
+
+>> git clone repo_name. </br>
 >> pip install -r requirements.txt </br>
+
 -Do migrations.
 -Create superuser. </br>
 -Run djangoserver. </br>
