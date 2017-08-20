@@ -1,0 +1,48 @@
+{% extends './base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'music/css/index.css' %}">
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'music/js/index.js' %}" ></script>
+{% endblock %}
+
+{% block body %}
+<div class='row index-body'>
+	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 description">
+		<div class='jumbotron'>
+			<h1>Mumble</h1>
+			<h2>Built for music lovers</h2>
+			<p>One place for all your music. Store, play and take it where ever you go.</p>
+		</div>
+		<div class='col-xs-12 btn-div'>
+			<button class='btn btn-success signup-btn' >Signup</button>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 signup">
+		{% if form.non_field_errors %}
+		{% for err in form.non_field_errors %}
+		<div class='alert alert-success'>
+			<a class="close" data-dismiss="alert" aria-label="close" >&times;</a>
+			{{err}}
+		</div>
+		{% endfor %}
+		{% endif %}
+		<form class='' method='post' >
+			{% csrf_token %}
+			{% include './form-template.html' %}
+			<input type="submit" class='btn btn-success' name='submit' value='Register' >
+		</form>
+	</div>
+</div>
+<div class="row">
+	<div class='footer col-xs-12 col-sm-12 col-md-12 col-lg-12' >
+		<div class=''>
+			<h3>Mumble</h3>
+			<h4>&copy; 2017</h4>
+		</div>
+	</div>
+</div>
+{% endblock %}

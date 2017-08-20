@@ -1,0 +1,72 @@
+{% extends 'music/base.html' %}
+
+{% load staticfiles %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'music/css/home.css' %}" />
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'music/js/home.js' %}" ></script>
+{% endblock %}
+
+{% block body %}
+	{% if albums %}
+	<div class='row'>
+		{% for album in albums %}
+			<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 albums" id="albums" >
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 albums-inner">
+					<a href="{% url 'album_detail' album.id %}" >
+						<img src="{{ album.album_logo.url }}" class='img-thumbnail img-responsive' >
+						<div class="artist-album" >
+							<h3 class="" >
+								{{ album.album_title }}
+							</h3>
+							<h4 class="">
+								{{ album.artist }}
+							</h4>
+						</div>
+					</a>
+
+					<div class='detail-wrapper'>
+					<!-- View details -->
+						<button 
+						class = "btn btn-info btn-md view-details col-xs-12 col-sm-12 col-md-12 col-lg-12" 
+						data-placement = "auto top" 
+						data-toggle = "popover" 
+						title = "<em>{{album.album_title}}</em>"
+						data-content = "
+						<p><strong>Artist(s): </strong>{{album.artist}}</p>
+						<p><strong>Genre(s): </strong>{{album.artist}}</p>
+						<p><strong>Song(s): </strong>{{album.song_set.count}}</p>" >
+						
+							View details
+						</button>
+						<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' style='text-align: center;'>
+						<!-- Delete -->
+							<form action="{% url 'album_delete' album.id %}" method="post" style="display: inline;" >
+								{% csrf_token %}
+								<input type="hidden" name="album_id" value="{{ album.id }}" >
+								<button type="submit" class="btn btn-default btn-sm" >
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+							</form>
+
+							<!-- favorite -->
+							<a class="btn btn-default btn-sm btn-favorite {% if album.is_favorite %} add-fav {% endif %}" data-id="{{ album.id }}" >
+								<span class="glyphicon glyphicon-star" ></span>
+							</a>
+							<!-- edit -->
+							<a href="{% url 'album_update' album.id %}" class="btn btn-default btn-sm " >
+								<span class="glyphicon glyphicon-edit" ></span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	{% else %}
+		<h3>Albums are not available.<a href="{% url 'album_create' %}" >Click here</a> to Add album</h3>
+	{% endif %}
+
+{% endblock %}

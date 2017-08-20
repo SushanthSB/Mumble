@@ -1,0 +1,76 @@
+.phone-container {
+	display: none;
+}
+.others-container {
+	display: block;
+}
+.songs-table {
+	background-color: white;
+}
+.add-fav {
+	color:orange !important;
+}
+.player-div {
+	display: none;
+}
+
+@media only screen and (max-width: 768px) {
+	.others-container {
+		display: none;
+	}
+  	.phone-container {
+  		display: block;
+  		padding-bottom: 30px;
+  		padding-left: 0px;
+  		padding-right: 0px;
+  	}
+	.album-icon {
+		padding:0px;
+	}
+	.album-icon img {
+		height: 200px;
+		width: 100%
+	}
+	.album-icon h1, h3 {
+		font-size: 14px;
+		display: inline;
+	}
+	.song-table {
+		overflow-x: auto;
+	}
+	.new-song {
+		padding-top: 3px;
+		background-color: white !important;
+		margin-top: 5px;
+	}
+	.test:after {
+ 		content: '\2807';
+  		font-size: 20px;
+  	}
+  	.player-div {
+  		display: none;
+  		position: fixed;
+  		z-index: 999;
+  		bottom: 0px;
+  	}
+  	.artist-span {
+  		text-align: center;
+  	}
+  	.play-song img {
+  		width:50px;
+  	}
+  	.song-title {
+  		white-space: nowrap;
+  		overflow:hidden;
+  		text-overflow: ellipsis;
+  	}
+}
+
+@media only screen and (max-width: 489px){
+	.artist-span {
+		display: block;
+	}
+	.phone-container {
+  		padding-bottom: 5px;
+  	}
+}

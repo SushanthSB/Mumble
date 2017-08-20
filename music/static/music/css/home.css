@@ -1,0 +1,45 @@
+.row {
+	padding-top: 10px;
+}
+.albums-inner {
+	background-color: white;
+	border-radius: 5px;
+	padding: 0px 0px 16px 0px
+}
+.artist-album, .detail-wrapper{
+	padding: 0px 16px;;
+}
+.albums-inner a {
+	text-decoration: none;
+	color:black;
+}
+.albums-inner a img {
+	display:block;
+	margin: 0 auto;
+}
+.add-fav {
+	color:orange !important;
+}
+.dots:after {
+  content: '\2807';
+  font-size: 3em;
+  color: #2e2e2e
+}
+
+@media only screen and (max-width:732px) {
+	.albums-inner {
+		padding: 0px 0px 5px 0px
+	}
+	.albums-inner h3 {
+		font-size: 14px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.albums-inner h4 {
+		display: none;
+	}
+	.view-details {
+		font-size: 10px;
+	}
+}

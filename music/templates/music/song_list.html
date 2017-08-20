@@ -1,0 +1,77 @@
+{% extends 'music/base.html' %}
+
+{% load staticfiles %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'music/css/song_list.css' %}" />
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'music/js/song_list.js' %}" ></script>
+{% endblock %}
+
+{% block body %}
+	<div class="row others-container ">
+		<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-0ffset-1 songs-table">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th><h3>Title</h3></th>
+						<th><h3>Artist</h3></th>
+						<th><h3>Album</h3></th>
+						<th><h3>Genre</h3></th>
+						<th><h3>Media</h3></th>
+						<th><h3>Favorite</h3></th>
+					</tr>
+				</thead>
+				<tbody>
+				{%if songs %}
+					{% for song in songs %}
+						<tr>
+							<td>{{song.song_title}}</td>
+							<td>{{song.album.artist}}</td>
+							<td>{{song.album.album_title}}</td>
+							<td>{{song.album.genres}}</td>
+							<td>
+								<audio controls controlsList="nodownload">
+									<source src="{{song.song.url}}" type="audio/mpeg">	
+								</audio>
+							</td>
+							<td>
+								<span class="glyphicon glyphicon-heart btn-favorite {% if song.is_favorite %}add-fav {%endif%}" data-id='{{song.id}}' ></span>
+							</td>
+						</tr>
+					{% endfor %}
+				{% else %}
+					<tr>
+						<td colspan='4'><h3>No songs available, start adding songs by going into Albums</h3></td>
+					</tr>
+				{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- For mobile devices with port less than 768px -->
+<div class='col-xs-12 phone-container'>
+	<div class='col-xs-12'>
+		<table class='table table-hover col-xs-12' >
+			<tbody>
+				{% for song in songs %}
+				<tr class='play-song' data-song="{{song.song.url}}" >
+					<td><img src="{{song.album.album_logo.url}}" /></td>
+					<td >
+						<span class='song-title'>{{song.song_title}}</span><br/>
+						<span>{{song.album.artist}} | {{song.album.album_title}}</span>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class='col-xs-12 player-div' >
+	<audio controls controlsList="nodownload" class='col-xs-12 song-play' >
+		<source src="" type="audio/mpeg">	
+	</audio>
+</div>
+{% endblock %}

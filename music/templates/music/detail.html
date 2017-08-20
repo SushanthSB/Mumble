@@ -1,0 +1,116 @@
+{% extends 'music/base.html' %}
+
+{% load staticfiles %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'music/css/detail.css' %}" />
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'music/js/detail.js' %}" ></script>
+{% endblock %}
+
+{% block body %}
+<!-- For devices with display port greater than 768 px -->
+<div class="row">
+<div class="col-sm-12 col-md-12 col-lg-12 others-container" >
+	<div class="col-sm-3 col-md-3 col-lg-3" >
+		<div class="album-icon col-sm-12 col-md-12 col-lg-12">
+			<img src="{{albums.album_logo.url}}" class="img-thumbnail img-responsive" />
+
+			<h1>{{albums.album_title}}</h1>
+			<p>-{{albums.artist}}</p>
+		</div>
+	</div>
+	<div class="col-sm-8 col-md-8 col-lg-8" style='padding:0px'>
+		<div class='new-song' class="col-sm-12 col-lg-12">
+			<a href="{% url 'song_add' albums.id %}" class='label label-primary'>
+				<span class='glyphicon glyphicon-plus'></span>
+				Add song
+			</a>
+		</div>
+		<div class="song-table" class="col-sm-12 col-lg-12" style='padding:0px'>
+			<table class="table table-hover song-table" >
+				<thead>
+					<tr>
+						<th> <h3>Song</h3></th>
+						<th> <h3>Artist</h3> </th>
+						<th> <h3>Media</h3> </th>
+						<th> <h3>Favorite</h3> </th>
+						<th> <h3>Action</h3></th>
+					</tr>
+				</thead>
+				<tbody>
+				{% if albums.song_set.all %}
+				{% for song in albums.song_set.all %}
+					<tr>
+						<td>{{ song.song_title }} </td>
+						<td>{{albums.artist}}</td>
+						<td>
+							<audio controls controlsList="nodownload">
+								<source src="{{song.song.url}}" type="audio/mpeg">	
+							</audio>
+						</td>
+						<td>
+							<span class="glyphicon glyphicon-heart btn-favorite {% if song.is_favorite %}add-fav {%endif%}" data-id='{{song.id}}' ></span>
+						</td>
+						<td>
+							<a href="{% url 'song_delete' pk=albums.id sid=song.id %}" class='glyphicon glyphicon-trash' ></a>&nbsp;
+							<a href="{% url 'song_update' song.id %}" class='glyphicon glyphicon-edit'></a>
+						</td>
+					</tr>
+				{% endfor %}
+				{% else %}
+					<tr>
+						<td colspan='5'><h3>No songs available, start adding songs by clicking "Add song" icon at the top left of this table.</h3></td>
+					</tr>
+				{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+
+<!-- For mobile devices with port less than 768px -->
+<div class="row">
+<div class='col-xs-12 phone-container'>
+	<div class="col-xs-12">
+		<img src="{{albums.album_logo.url}}" class="img-thumbnail img-responsive" />
+		<span class='artist-span'>
+			<b>{{albums.album_title}}</b>
+			<span>-{{albums.artist}}</span>
+		</span>
+	</div>
+	<div class='col-xs-12 song-table'>
+		<table class='table table-hover col-xs-12' >
+			<tbody>
+				{% for song in albums.song_set.all %}
+				<tr>
+					<td class='play-song' data-song="{{song.song.url}}" >{{song.song_title}}</td>
+					<td >
+						<div 
+						class="test" 
+						data-toggle="popover"
+						data-placement="top"
+						data-content="
+						<a href='{% url 'song_delete' pk=albums.id sid=song.id %}' class='glyphicon glyphicon-trash' ></a>&nbsp;
+						<a href='{% url 'song_update' song.id %}' class='glyphicon glyphicon-edit'></a>" >
+								
+						</div>	
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<a href="{% url 'song_add' albums.id %}" class="add-song glyphicon glyphicon-plus"></a>
+</div>
+</div>
+<div class="row">
+<div class='col-xs-12 player-div' >
+	<audio controls controlsList="nodownload" class='col-xs-12 song-play' >
+		<source src="" type="audio/mpeg">	
+	</audio>
+</div>
+</div>
+{% endblock %}

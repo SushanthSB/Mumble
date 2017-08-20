@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang='en'>
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" >
+		<title>Groove</title>
+
+		{% load staticfiles %}
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+		<link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{% static 'music/css/base.css' %}" />
+		{% block styles %}
+		{% endblock %}
+		<script
+		  src="https://code.jquery.com/jquery-3.2.1.min.js"
+		  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		  crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		{% block script %}
+		{% endblock %}
+		
+	</head>
+	<body>
+	<nav class="navbar navbar-inverse" >
+		<div class="container-fluid">
+			
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar" >
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<a class="navbar-brand" href="{% url 'index' %}" >
+					Mumble
+				</a>
+			</div>
+
+			<!-- Items  -->
+			<div class="collapse navbar-collapse" id="topNavBar">
+				
+				{% if request.user.is_authenticated %}
+				<ul class="nav navbar-nav">
+					<li class="" >
+						<a href="{% url 'home' %}" >
+							<span class="glyphicon glyphicon-cd" aria-hiddne="true"></span>&nbsp;
+							Albums
+						</a>
+					</li>
+					<li class="" >
+						<a href="{% url 'songs' %}" >
+							<span class="glyphicon glyphicon-music" aria-hiddne="true"></span>&nbsp;
+							Songs
+						</a>
+					</li>
+				</ul>
+				{% endif %}
+				
+				<ul class="nav navbar-nav navbar-right">
+					{% if request.user.is_authenticated %}
+					<li class="" >
+						<a href="{% url 'album_create' %}" >
+							<span class="glyphicon glyphicon-plus" aria-hiddne="true"></span>&nbsp;
+							Add Album
+						</a>
+					</li>
+					{% endif %}
+					<li>
+						{% if request.user.username != "" %}
+							<a class='dropdown-toggle' data-toggle='dropdown'>
+								<span class="glyphicon glyphicon-user glyphicon-sm"></span>&nbsp;
+								{{user.username}}
+								<span class='caret'></span></a>
+							<ul class='dropdown-menu' >
+								<li>
+									<a href="{% url 'logout' %}" >
+										<span class="glyphicon glyphicon-off"></span>&nbsp;
+										Logout
+									</a>
+								</li>
+							</ul>
+						
+						{% else %}
+							<a href="{% url 'login' %}" >
+								<span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;
+								<b class=''>Log in </b>
+							</a>
+						{% endif%}
+					
+					</li>
+				</ul>
+
+			</div>
+
+		</div>
+	</nav>
+	<div class="container-fluid" >
+		{% block body %}
+		{% endblock %}
+	</div>
+</body>
+</html>
